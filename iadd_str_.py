@@ -26,7 +26,23 @@ class Cake:
     def __str__(self):
         return f"Printed object: name: {self.name}, kind: {self.kind}, additives: {self.additives}"
 
+    def __iadd__(self, new_items):
+        if type(new_items) is list:
+            additives = self.additives
+            additives.extend(new_items)
+            return Cake(self.name, self.kind, self.taste, additives, self.filling)
+        elif type(new_items) is str:
+            additives = self.additives
+            additives.append(new_items)
+            return Cake(self.name, self.kind, self.taste, additives, self.filling)
+        else:
+            raise Exception(
+                f'Adding type {type(new_items)} to Cake is not implemented.')
+
 
 cake01 = Cake('Vanilla Cake', 'cake', 'vanilla',
               ['chocolade', 'nuts'], 'cream')
-print(cake01)
+cake01.show_info()
+
+cake01 += ['magic stars', 'More chocolate']
+cake01.show_info()
